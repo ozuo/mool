@@ -1,57 +1,18 @@
 <template>
-  <div>
-    <v-header :seller="seller"></v-header>
-    <div class="tab border-1px">
-      <div class="tab-item">
-        <router-link to="/goods">商品</router-link>
-      </div>
-      <div class="tab-item">
-        <router-link to="/ratings">评论</router-link>
-      </div>
-      <div class="tab-item">
-        <router-link to="/seller">商家</router-link>
-      </div>
-    </div>
-    <keep-alive>
-      <router-view :seller="seller"></router-view>
-    </keep-alive>
+  <div id="app">
+    <router-view></router-view>
   </div>
 </template>
 
-<script type="text/ecmascript-6">
-  import {urlParse} from 'utils/index'
-  import header from 'components/header/header.vue'
-
-  const ERR_OK = 0
-  const debug = process.env.NODE_ENV !== 'production'
-
+<script>
   export default {
-    data () {
-      return {
-        seller: {
-          id: (() => {
-            let queryParam = urlParse()
-            return queryParam.id
-          })()
-        }
-      }
-    },
-    created () {
-      const url = debug ? '/api/seller' : 'http://ustbhuangyi.com/sell/api/seller'
-      this.$http.get(url + '?id=' + this.seller.id).then((response) => {
-        response = response.body
-        if (response.errno === ERR_OK) {
-          this.seller = Object.assign({}, this.seller, response.data)
-        }
-      })
-    },
-    components: {
-      'v-header': header
-    }
+    name: 'APP'
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  /* 阿里图标字体 */
+  @import url(//at.alicdn.com/t/font_429333_mlqija5id2r442t9.css);
   @import "assets/stylus/mixin.styl"
 
   .tab
